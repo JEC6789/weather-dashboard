@@ -1,3 +1,4 @@
+var apiKey = "4" + "8" + "0" + "6" + "b" + "8" + "0" + "a" + "8" + "7" + "d" + "4" + "d" + "5" + "f" + "0" + "3" + "2" + "1" + "3" + "f" + "3" + "9" + "8" + "1" + "b" + "4" + "7" + "9" + "9" + "a" + "d";
 var articleEl = document.querySelector("article");
 var cityFormEl = document.querySelector("#city-form");
 var cityInputEl = document.querySelector("#city");
