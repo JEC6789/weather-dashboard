@@ -19,7 +19,7 @@ var formSubmitHandler = function(event) {
 };
 
 var getLocation = function(city) {
-    var geoApiUrl = "http://api.openweathermap.org/geo/1.0/direct?q=" + city + "&limit=1&appid=" + apiKey;
+    var geoApiUrl = "https://api.openweathermap.org/geo/1.0/direct?q=" + city + "&limit=1&appid=" + apiKey;
 
     fetch(geoApiUrl).then(function(response) {
         if(response.ok) {
@@ -40,9 +40,9 @@ var getWeatherData = function(lat, lon) {
 
     fetch(oneCallApiUrl).then(function(response) {
         if(response.ok) {
-            response.json().then(function(data) {
-                console.log(data);
-                //functionName(data);
+            response.json().then(function(weatherData) {
+                console.log(weatherData);
+                //functionName(weatherData);
             });
         } else {
             alert("Somebody just got diagnosed with skill issue. Could be you, could be me, could be the API I'm getting the data you requested from. It doesn't matter who has skill issue in the end though, as it is a disease that stops everything in its tracks. Maybe try submitting that city again and see if it changes anything.");
