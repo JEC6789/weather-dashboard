@@ -16,6 +16,7 @@ header {
 }
 
 main {
+    display: flex;
     padding: 8px;
 }
 
@@ -23,17 +24,21 @@ aside {
     width: 300px;
 }
 
+h2 {
+    display: inline-block;
+}
+
 button, input, hr {
     margin: 5px 0;
 }
 
-button, input {
+button, input, section {
     border-radius: 5px;
     padding: 8px;
     width: 100%;
 }
 
-input {
+input, section {
     border: 2px solid #afafaf;
 }
 
@@ -50,4 +55,51 @@ form button {
 hr {
     background: #afafaf;
     border: 1px solid #afafaf;
+}
+
+article {
+    margin-left: 8px;
+    width: calc(100% - 300px);
+}
+
+div {
+    display: flex;
+}
+
+img {
+    height: 27.2px;
+    width: 27.2px;
+}
+
+p {
+    margin: 1em 0;
+}
+
+.low, .moderate, .high, .very-high, .extreme {
+    border-radius: 5px;
+    padding: 5px 10px;
+    font-size: small;
+}
+
+.low {
+    background-color: #008000;
+    color: #fff;
+}
+
+.moderate {
+    background-color: #ffd700;
+}
+
+.high {
+    background-color: #ff8c00;
+}
+
+.very-high {
+    background-color: #8b0000;
+    color: #fff;
+}
+
+.extreme {
+    background-color: #800080;
+    color: #fff;
 }
