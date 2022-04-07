@@ -47,6 +47,8 @@ var searchButtonHandler = function(event) {
     var targetEl = event.target;
 
     if(targetEl.matches("button")) {
+        articleEl.innerHTML = "";
+
         var city = targetEl.value.trim();
 
         if(city) {
