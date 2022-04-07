@@ -14,7 +14,7 @@ var formSubmitHandler = function(event) {
         getLocation(city);
         cityInputEl.value = "";
     }  else {
-        alert("Please enter a city");
+        articleEl.innerHTML = "<h3 class='alert'>Please enter a city</h3>";
     }
 };
 
@@ -28,7 +28,7 @@ var getLocation = function(city) {
                 getWeatherData(geoData);
             });
         } else {
-            alert("Somebody just got diagnosed with skill issue. Could be you, could be me, could be the API I'm getting the data you requested from. It doesn't matter who has skill issue in the end though, as it is a disease that stops everything in its tracks. Maybe try submitting that city again and see if it changes anything.");
+            articleEl.innerHTML = "<h3 class='alert'>Somebody just got diagnosed with skill issue. Could be you, could be me, could be the API I'm getting the data you requested from. It doesn't matter who has skill issue in the end though, as it is a disease that stops everything in its tracks. Maybe try submitting that city again and see if it changes anything.</h3>";
         }
     });
 };
@@ -43,31 +43,38 @@ var getWeatherData = function(geoData) {
                 displayWeatherData(geoData, weatherData);
             });
         } else {
-            alert("Somebody just got diagnosed with skill issue. Could be you, could be me, could be the API I'm getting the data you requested from. It doesn't matter who has skill issue in the end though, as it is a disease that stops everything in its tracks. Maybe try submitting that city again and see if it changes anything.");
+            articleEl.innerHTML = "<h3 class='alert'>Somebody just got diagnosed with skill issue. Could be you, could be me, could be the API I'm getting the data you requested from. It doesn't matter who has skill issue in the end though, as it is a disease that stops everything in its tracks. Maybe try submitting that city again and see if it changes anything.</h3>";
         }
     });
 };
 
 var displayWeatherData = function(geoData, weatherData) {
-    var date = new Date();
+    var currentDate = new Date();
 
     var currentWeatherEl = document.createElement("section")
+    currentWeatherEl.className = "current";
     var headerEl = document.createElement("div");
 
     var headerTextEl = document.createElement("h2");
-    headerTextEl.textContent = geoData[0].name + " (" + String(date.getMonth() + 1).padStart(2, '0') + "/" + String(date.getDate()).padStart(2, '0') + "/" + date.getFullYear() + ")";
+    headerTextEl.textContent = geoData[0].name + " (" + String(currentDate.getMonth() + 1).padStart(2, '0') + "/" + String(currentDate.getDate()).padStart(2, '0') + "/" + currentDate.getFullYear() + ")";
+    headerEl.appendChild(headerTextEl);
 
     var imageEl = document.createElement("img");
     imageEl.setAttribute("src", "https://openweathermap.org/img/wn/" + weatherData.current.weather[0].icon + "@2x.png");
+    headerEl.appendChild(imageEl);
+    currentWeatherEl.appendChild(headerEl);
 
     var currentTempEl = document.createElement("p");
     currentTempEl.textContent = "Temp: " + weatherData.current.temp + "°F";
+    currentWeatherEl.appendChild(currentTempEl);
 
     var currentWindEl = document.createElement("p");
     currentWindEl.textContent = "Wind: " + weatherData.current.wind_speed + " MPH";
+    currentWeatherEl.appendChild(currentWindEl);
 
     var currentHumidityEl = document.createElement("p");
     currentHumidityEl.textContent = "Humidity: " + weatherData.current.humidity + " %";
+    currentWeatherEl.appendChild(currentHumidityEl);
 
     var currentUVEl = document.createElement("p");
     currentUVEl.textContent = "UV Index: ";
@@ -85,16 +92,48 @@ var displayWeatherData = function(geoData, weatherData) {
         UVColorEl.className = "extreme";
     }
     UVColorEl.textContent = weatherData.current.uvi;
-
-    headerEl.appendChild(headerTextEl);
-    headerEl.appendChild(imageEl);
-    currentWeatherEl.appendChild(headerEl);
-    currentWeatherEl.appendChild(currentTempEl);
-    currentWeatherEl.appendChild(currentWindEl);
-    currentWeatherEl.appendChild(currentHumidityEl);
     currentUVEl.appendChild(UVColorEl);
     currentWeatherEl.appendChild(currentUVEl);
     articleEl.appendChild(currentWeatherEl);
+
+    var forecastHeaderEl = document.createElement("h3");
+    forecastHeaderEl.textContent = "5-Day Forecast:";
+    articleEl.appendChild(forecastHeaderEl);
+
+    var forecastContainerEl = document.createElement("section");
+    forecastContainerEl.className = "forecast-container";
+
+    for(var i = 0; i < 5; i++) {
+        var forecastCardEl = document.createElement("div");
+        forecastCardEl.className = "forecast-card";
+
+        var forecastDate = new Date();
+        forecastDate.setDate(forecastDate.getDate() + i + 1);
+
+        var forecastDateEl = document.createElement("h4");
+        forecastDateEl.textContent = String(forecastDate.getMonth() + 1).padStart(2, '0') + "/" + String(forecastDate.getDate()).padStart(2, '0') + "/" + forecastDate.getFullYear();
+        forecastCardEl.appendChild(forecastDateEl);
+
+        var forecastImageEl = document.createElement("img");
+        forecastImageEl.setAttribute("src", "https://openweathermap.org/img/wn/" + weatherData.daily[i].weather[0].icon + "@2x.png");
+        forecastCardEl.appendChild(forecastImageEl);
+
+        var forecastTempEl = document.createElement("p");
+        forecastTempEl.textContent = "Temp: " + weatherData.daily[i].temp.max + " °F";
+        forecastCardEl.appendChild(forecastTempEl);
+
+        var forecastWindEl = document.createElement("p");
+        forecastWindEl.textContent = "Wind: " + weatherData.daily[i].wind_speed + " MPH";
+        forecastCardEl.appendChild(forecastWindEl);
+
+        var forecastHumidityEl = document.createElement("p");
+        forecastHumidityEl.textContent = "Humidity: " + weatherData.daily[i].humidity + " %";
+        forecastCardEl.appendChild(forecastHumidityEl);
+
+        forecastContainerEl.appendChild(forecastCardEl);
+    }
+
+    articleEl.appendChild(forecastContainerEl);
 };
 
 cityFormEl.addEventListener("submit", formSubmitHandler);
