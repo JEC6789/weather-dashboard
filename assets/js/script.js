@@ -54,7 +54,7 @@ var searchButtonHandler = function(event) {
         if(city) {
             getLocation(city);
         } else {
-            articleEl.innerHTML = "<h3 class='alert'>If you see this text, you've just encountered a bug that needs to be fixed. <a href='https://github.com/JEC6789/weather-dashboard/issues' target='_blank'>Please report this issue on GitHub</a> so I can look into it further.";
+            articleEl.innerHTML = "<h3 class='alert'>If you see this text, you've just encountered a bug that may need to be fixed. <a href='https://github.com/JEC6789/weather-dashboard/issues' target='_blank'>Please report this issue on GitHub</a> so I can look into it further.";
         }
     }
 };
