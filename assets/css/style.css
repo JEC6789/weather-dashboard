@@ -52,8 +52,12 @@ button {
 }
 
 form button {
-    background-color: #1e90ff;
+    background-color: #1b54b7;
     color: #fff;
+}
+
+form button:hover {
+    background-color: #1e90ff;
 }
 
 hr {
@@ -70,7 +74,7 @@ section {
     padding-top: 8px;
 }
 
-div {
+.header {
     display: flex;
 }
 
@@ -92,7 +96,7 @@ h3 {
     margin-top: 1em;
 }
 
-.alert {
+.alert, .alert a {
     color: #bf0000;
     margin-top: 5px;
 }
@@ -136,7 +140,7 @@ h3 {
     background-color: #303070;
     border: 1px solid #000;
     color: #fff;
-    display: block;
+    margin-bottom: 5px;
     padding: 5px 5px 0 5px;
     min-width: 150px;
     width: fit-content;

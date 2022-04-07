@@ -2,6 +2,8 @@ var apiKey = "4" + "8" + "0" + "6" + "b" + "8" + "0" + "a" + "8" + "7" + "d" + "
 var articleEl = document.querySelector("article");
 var cityFormEl = document.querySelector("#city-form");
 var cityInputEl = document.querySelector("#city");
+var searchHistory = [];
+var searchHistoryEl = document.querySelector("#search-history");
 
 var formSubmitHandler = function(event) {
     event.preventDefault();
@@ -10,11 +12,48 @@ var formSubmitHandler = function(event) {
 
     var city = cityInputEl.value.trim();
 
+    var saveCity = true;
+
     if(city) {
         getLocation(city);
         cityInputEl.value = "";
-    }  else {
+
+        for(var i = 0; i < searchHistory.length; i++){
+            if(city === searchHistory[i]) {
+                saveCity = false;
+            }
+        }
+
+        if(saveCity === true) {
+            searchHistory.push(city);
+        }
+
+        if(searchHistory.length === 9) {
+            for(var i = 0; i < 8; i++) {
+                searchHistory[i] = searchHistory[i + 1];
+            }
+
+            searchHistory.splice(-1);
+        }
+
+        localStorage.setItem("city-history", JSON.stringify(searchHistory));
+        
+    } else {
         articleEl.innerHTML = "<h3 class='alert'>Please enter a city</h3>";
+    }
+};
+
+var searchButtonHandler = function(event) {
+    var targetEl = event.target;
+
+    if(targetEl.matches("button")) {
+        var city = targetEl.value.trim();
+
+        if(city) {
+            getLocation(city);
+        } else {
+            articleEl.innerHTML = "<h3 class='alert'>If you see this text, you've just encountered a bug that needs to be fixed. <a href='https://github.com/JEC6789/weather-dashboard/issues' target='_blank'>Please report this issue on GitHub</a> so I can look into it further.";
+        }
     }
 };
 
@@ -54,6 +93,7 @@ var displayWeatherData = function(geoData, weatherData) {
     var currentWeatherEl = document.createElement("section")
     currentWeatherEl.className = "current";
     var headerEl = document.createElement("div");
+    headerEl.className = "header";
 
     var headerTextEl = document.createElement("h2");
     headerTextEl.textContent = geoData[0].name + " (" + String(currentDate.getMonth() + 1).padStart(2, '0') + "/" + String(currentDate.getDate()).padStart(2, '0') + "/" + currentDate.getFullYear() + ")";
@@ -136,4 +176,15 @@ var displayWeatherData = function(geoData, weatherData) {
     articleEl.appendChild(forecastContainerEl);
 };
 
+var loadSearchHistory = function() {
+    var savedHistory = localStorage.getItem("city-history");
+    if(!savedHistory) {
+        return false;
+    }
+
+    searchHistory = JSON.parse(savedHistory);
+};
+
+searchHistoryEl.addEventListener("click", searchButtonHandler);
 cityFormEl.addEventListener("submit", formSubmitHandler);
+loadSearchHistory();
