@@ -66,7 +66,6 @@ var getLocation = function(city) {
     fetch(geoApiUrl).then(function(response) {
         if(response.ok) {
             response.json().then(function(geoData) {
-                console.log(geoData);
                 getWeatherData(geoData);
             });
         } else {
@@ -81,7 +80,6 @@ var getWeatherData = function(geoData) {
     fetch(oneCallApiUrl).then(function(response) {
         if(response.ok) {
             response.json().then(function(weatherData) {
-                console.log(weatherData);
                 displayWeatherData(geoData, weatherData);
             });
         } else {
@@ -192,7 +190,7 @@ var loadSearchHistory = function() {
 
 var displaySearchHistory = function() {
     searchHistoryEl.innerHTML = "";
-    
+
     for(var i = searchHistory.length - 1; i >= 0; i--) {
         var historyItemEl = document.createElement("button");
         historyItemEl.textContent = searchHistory[i];
