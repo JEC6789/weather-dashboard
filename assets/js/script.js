@@ -37,7 +37,8 @@ var formSubmitHandler = function(event) {
         }
 
         localStorage.setItem("city-history", JSON.stringify(searchHistory));
-        
+
+        displaySearchHistory();
     } else {
         articleEl.innerHTML = "<h3 class='alert'>Please enter a city</h3>";
     }
@@ -49,7 +50,7 @@ var searchButtonHandler = function(event) {
     if(targetEl.matches("button")) {
         articleEl.innerHTML = "";
 
-        var city = targetEl.value.trim();
+        var city = targetEl.textContent;
 
         if(city) {
             getLocation(city);
@@ -185,6 +186,16 @@ var loadSearchHistory = function() {
     }
 
     searchHistory = JSON.parse(savedHistory);
+
+    displaySearchHistory();
+};
+
+var displaySearchHistory = function() {
+    for(var i = 0; i < searchHistory.length; i++) {
+        var historyItemEl = document.createElement("button");
+        historyItemEl.textContent = searchHistory[i];
+        searchHistoryEl.appendChild(historyItemEl);
+    }
 };
 
 searchHistoryEl.addEventListener("click", searchButtonHandler);
