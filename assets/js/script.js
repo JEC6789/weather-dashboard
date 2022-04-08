@@ -191,6 +191,8 @@ var loadSearchHistory = function() {
 };
 
 var displaySearchHistory = function() {
+    searchHistoryEl.innerHTML = "";
+    
     for(var i = searchHistory.length - 1; i >= 0; i--) {
         var historyItemEl = document.createElement("button");
         historyItemEl.textContent = searchHistory[i];
