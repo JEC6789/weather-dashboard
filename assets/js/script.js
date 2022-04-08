@@ -191,7 +191,7 @@ var loadSearchHistory = function() {
 };
 
 var displaySearchHistory = function() {
-    for(var i = 0; i < searchHistory.length; i++) {
+    for(var i = searchHistory.length - 1; i >= 0; i--) {
         var historyItemEl = document.createElement("button");
         historyItemEl.textContent = searchHistory[i];
         searchHistoryEl.appendChild(historyItemEl);
